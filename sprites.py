@@ -10,11 +10,13 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  # Initializing sprite class within class
         # minimum two attributes required image and rectangle
-        player_walk_1 = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
-        player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
-        self.player_walk = [player_walk_1, player_walk_2]  # list holds player_walk_1 and player_walk_2 surfaces
+        player_walk_1 = pygame.image.load('graphics/Player/Martian/1.png').convert_alpha()
+        player_walk_2 = pygame.image.load('graphics/Player/Martian/2.png').convert_alpha()
+        player_walk_3 = pygame.image.load('graphics/Player/Martian/3.png').convert_alpha()
+        player_walk_4 = pygame.image.load('graphics/Player/Martian/4.png').convert_alpha()
+        self.player_walk = [player_walk_1, player_walk_2, player_walk_3, player_walk_4]  # list holds animation surfaces
         self.player_index = 0  # Use as index to pick either player_walk_1 or player_walk_2 from player_walk list
-        self.player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()  # Jump image
+        self.player_jump = pygame.image.load('graphics/Player/Martian/2.png').convert_alpha()  # Jump image
 
         self.image = self.player_walk[self.player_index]  # gives you index 0
         self.rect = self.image.get_rect(midbottom=(80, 300))
@@ -58,20 +60,28 @@ class Obstacle(pygame.sprite.Sprite):
 
     def __init__(self,type):  # use second argument to identify what type of enemy you want
         super().__init__()
-        # before creating image, check if type is fly or snail
-        if type == 'fly':
-            fly_1 = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
-            fly_2 = pygame.image.load('graphics/fly/fly2.png').convert_alpha()
-            self.frames = [fly_1, fly_2]
-            y_pos = 210  # y position needed for fly and snail since they are at different heights
+        # before creating image, check if type is fly or ground enemy
+        if type == 'fly':  # load flying images /
+            fly_1 = pygame.image.load('graphics/UFO/GreenUFO.png')
+            fly_1 = pygame.transform.scale(fly_1, (80, 40))  # scaling picture to 80 x 40 size
+            fly_1 = fly_1.convert()
+            fly_2 = pygame.image.load('graphics/UFO/blueUFO.png')
+            fly_2 = pygame.transform.scale(fly_2, (80, 40))  # scaling picture to 80 x 40 size
+            fly_2 = fly_2.convert()
+            fly_3 = pygame.image.load('graphics/UFO/yellowUFO.png')
+            fly_3 = pygame.transform.scale(fly_3, (80, 40))  # scaling picture to 80 x 40 size
+            fly_3 = fly_3.convert()
+
+            self.frames = [fly_1, fly_2, fly_3]
+            y_pos = 200  # y position needed for fly and snail since they are at different heights
         else:
-            snail_1 = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
-            snail_2 = pygame.image.load('graphics/snail/snail2.png').convert_alpha()
-            self.frames = [snail_1, snail_2]
+            walking_1 = pygame.image.load('graphics/Slime/slimeWalk1.png').convert_alpha()
+            walking_2 = pygame.image.load('graphics/Slime/slimeWalk2.png').convert_alpha()
+            self.frames = [walking_1, walking_2]
             y_pos = 300
 
         self.animation_index = 0  # index to track animations
-        self.image = self.frames[self.animation_index]  # list of differnt image frames
+        self.image = self.frames[self.animation_index]  # list of different image frames
         self.rect = self.image.get_rect(midbottom=(randint(900, 1100), y_pos))
 
     def animation_state(self):

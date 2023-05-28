@@ -1,6 +1,8 @@
 # Rigoberto Alvarez
 # First pygame project
+# Started 05/23/2023
 # Completed following youTube tutorial: https://www.youtube.com/watch?v=AY9MnQ4x3zk
+# credit for martian art: https://opengameart.org/content/martian-walking, https://opengameart.org/content/mars-background-pixel-art
 
 import pygame
 from sys import exit
@@ -29,13 +31,18 @@ player.add(sprites.Player())
 obstacle_group = pygame.sprite.Group()  # creating group of obstacles
 
 # Setting sky and ground surfaces
-sky_surface = pygame.image.load('graphics/Sky.png').convert()  # '.convert()' converts image (game runs faster)
-ground_surface = pygame.image.load('graphics/ground.png').convert()
+
+sky_surface = pygame.image.load('graphics/Skies/marsmid.png')
+sky_surface = pygame.transform.scale(sky_surface, (800, 300))  # Scaling picture
+sky_surface = sky_surface.convert()
+ground_surface = pygame.image.load('graphics/Grounds/red_dirt.png').convert()
+#ground_surface = pygame.transform.scale(ground_surface, (800, 168))
+#ground_surface = ground_surface.convert()
 
 
 # Intro screen
-player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()  # importing intro image of player
-player_stand = pygame.transform.rotozoom(player_stand, 0, 2)  # scaleing image with rotozoom (making it bigger)
+player_stand = pygame.image.load('graphics/Player/Martian/1.png').convert_alpha()  # importing intro image of player
+player_stand = pygame.transform.rotozoom(player_stand, 0, 2)  # scaling image with rotozoom (making it bigger)
 player_stand_rect = player_stand.get_rect(center=(400, 200))  # Create rectangle and setting on screen
 
 game_name = test_font.render('RigoRunner', False, (111, 196, 169))  # setting game name and color
@@ -62,8 +69,8 @@ while True:
             exit()  # exit method from sys cancels all code running
 
         if game_active:
-            if event.type == obstacle_timer:
-                obstacle_group.add(sprites.Obstacle(choice(['fly', 'snail', 'snail', 'snail'])))
+            if event.type == obstacle_timer: #  At set obstacle timer time, add enemies group
+                obstacle_group.add(sprites.Obstacle(choice(['fly', 'ground', 'ground', 'ground'])))
 
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
