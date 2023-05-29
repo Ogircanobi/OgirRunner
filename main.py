@@ -2,13 +2,14 @@
 # First pygame project
 # Started 05/23/2023
 # Completed following youTube tutorial: https://www.youtube.com/watch?v=AY9MnQ4x3zk
-# credit for martian art: https://opengameart.org/content/martian-walking, https://opengameart.org/content/mars-background-pixel-art
+# credit for martian art: https://opengameart.org/content/martian-walking,
+# https://opengameart.org/content/mars-background-pixel-art
 
 import pygame
 from sys import exit
 from random import choice
 import sprites
-from r_runner_functions import display_score, collision_sprite
+from r_runner_functions import display_score, collision_sprite, speed_update
 
 
 pygame.init()  # Create window using .init() This starts pygame and initiates all necessary functions
@@ -21,6 +22,7 @@ test_font = pygame.font.Font('font/Pixeltype.ttf', 50)  # 'None' = default font.
 game_active = False
 start_time = 0
 score = 0
+#speed = 5  # set starting speed
 bg_music = pygame.mixer.Sound('audio/music.wav')  # load music
 bg_music.play(loops=-1)  # Play music. -1 loops music forever
 
@@ -82,15 +84,16 @@ while True:
         screen.blit(sky_surface, (0, 0))
         screen.blit(ground_surface, (0, 300))
         score = display_score(start_time, test_font, screen)
+        speed = speed_update(score)
 
         player.draw(screen)
         player.update()
 
         # Calling obstacle group
         obstacle_group.draw(screen)
-        obstacle_group.update()
+        obstacle_group.update(speed)
 
-        # collision
+        # Collision detection :
         game_active = collision_sprite(player, obstacle_group)
 
     else:  # "Game Over Screen"

@@ -9,10 +9,19 @@ def display_score(start_time, test_font, screen):
     screen.blit(score_surf, score_rect)  # Draw out on screen
     return current_time
 
-
+# collision detection function
 def collision_sprite(player, obstacle_group):
     if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
         obstacle_group.empty()
         return False
     else:
         return True
+
+
+# This function adjusts speed of enemies based on score
+def speed_update(score):
+    start_speed = 5  # Initial speed.
+    speed_increment = 0.06  # Rate of speed increase
+    # Increase speed based on score
+    return start_speed + (speed_increment * score)
+
