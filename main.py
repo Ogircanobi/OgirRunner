@@ -9,7 +9,7 @@ import pygame
 from sys import exit
 from random import choice
 import sprites
-from r_runner_functions import display_score, collision_sprite, speed_update
+from functions import display_score, collision_sprite, speed_update
 
 
 pygame.init()  # Create window using .init() This starts pygame and initiates all necessary functions
