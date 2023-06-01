@@ -9,7 +9,7 @@ import pygame
 from sys import exit
 from random import choice
 import sprites
-from functions import display_score, collision_sprite, speed_update
+from functions import display_score, collision_sprite, speed_update, scroll_ground
 
 
 pygame.init()  # Create window using .init() This starts pygame and initiates all necessary functions
@@ -22,7 +22,7 @@ test_font = pygame.font.Font('font/Pixeltype.ttf', 50)  # 'None' = default font.
 game_active = False
 start_time = 0
 score = 0
-#speed = 5  # set starting speed
+ground_x = 0  # starting point of ground graphic
 bg_music = pygame.mixer.Sound('audio/music.wav')  # load music
 bg_music.play(loops=-1)  # Play music. -1 loops music forever
 
@@ -33,11 +33,10 @@ player.add(sprites.Player())
 obstacle_group = pygame.sprite.Group()  # creating group of obstacles
 
 # Setting sky and ground surfaces
-
 sky_surface = pygame.image.load('graphics/Skies/marsmid.png')
 sky_surface = pygame.transform.scale(sky_surface, (800, 300))  # Scaling picture
 sky_surface = sky_surface.convert()
-ground_surface = pygame.image.load('graphics/Grounds/red_dirt.png').convert()
+ground_surface = pygame.image.load('graphics/Grounds/red_dirt_extend.png').convert()
 #ground_surface = pygame.transform.scale(ground_surface, (800, 168))
 #ground_surface = ground_surface.convert()
 
@@ -80,11 +79,11 @@ while True:
                 start_time = int(pygame.time.get_ticks() / 1000)
 
     if game_active:  # Draw all our elements
-        # We use screen.blit(surface,(position)
+        # We use screen.blit(surface,(position))
         screen.blit(sky_surface, (0, 0))
-        screen.blit(ground_surface, (0, 300))
-        score = display_score(start_time, test_font, screen)
         speed = speed_update(score)
+        ground_x = scroll_ground(screen, ground_surface, ground_x, speed)
+        score = display_score(start_time, test_font, screen)
 
         player.draw(screen)
         player.update()

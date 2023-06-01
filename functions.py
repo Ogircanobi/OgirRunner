@@ -25,3 +25,16 @@ def speed_update(score):
     # Increase speed based on score
     return start_speed + (speed_increment * score)
 
+# scroll_ground scrolls ground across screen
+# arguments: screen, ground_surface, ground_x, speed
+def scroll_ground(screen, ground_surface, ground_x, speed):
+    # Calculate width of ground surface image and display it
+    width = ground_surface.get_width()
+    screen.blit(ground_surface, (ground_x, 300))
+
+    # Calculate the distance to move ground based on speed
+    ground_x -= speed-(speed * 25 / 100)
+    # Reset ground_x when image reaches its end
+    if ground_x < -width+800:
+        ground_x = 0
+    return ground_x

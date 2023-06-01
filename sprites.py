@@ -93,6 +93,7 @@ class Obstacle(pygame.sprite.Sprite):
             self.animation_index = 0
         self.image = self.frames[int(self.animation_index)]
 
+    # moves sprite based on speed (from speed_update() function)
     def update(self, speed):
         self.animation_state()
         self.rect.x -= speed
